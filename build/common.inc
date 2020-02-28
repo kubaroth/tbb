@@ -124,6 +124,9 @@ ifneq ($(BUILDING_PHASE),1)
  work_dir=$(tbb_build_dir)$(SLASH)$(tbb_build_prefix)
 endif  # BUILDING_PHASE != 1
 
+# Define default install prefix.
+export tbb_install_prefix?="$(shell pwd)$(SLASH)install_dir"
+
 ifdef offload
   extra_inc=$(offload).offload.inc
 endif

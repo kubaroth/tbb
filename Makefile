@@ -73,10 +73,23 @@ mkdir:
 	$(shell $(MD) "$(work_dir)_debug" >$(NUL) 2>$(NUL))
 	@echo Created $(work_dir)_release and ..._debug directories
 
+install: tbb tbbmalloc tbbproxy
+	# Copy generate libs, includes, and cmake configuration files
+	# Usage: tbb_install_prefix=./install_dir2 make -j 20 install
+	@mkdir -p "$(tbb_install_prefix)$(SLASH)lib"
+	@mkdir -p "$(tbb_install_prefix)$(SLASH)share"
+	find "$(work_dir)_release" -name "*.$(LIBEXT)*" -print0 | xargs -0 -I {{}} cp -vP {{}} "$(tbb_install_prefix)/lib"
+	# Force recreate symlinks, TODO replace harcoded interfacev ersion (2) of the soname
+	for LIBNAME in $^; do \
+		ln -sfr "$(tbb_install_prefix)/lib/lib$$LIBNAME.$(LIBEXT).2" "$(tbb_install_prefix)/lib/lib$$LIBNAME.$(LIBEXT)" ; \
+	done
+	cp -r "$(work_dir)_release$(SLASH)$(tbb_root)$(SLASH)cmake" "$(tbb_install_prefix)$(SLASH)share"
+	cp -r "$(work_dir)_release$(SLASH)$(tbb_root)$(SLASH)include" "$(tbb_install_prefix)"
+
 info:
 	@echo OS: $(tbb_os)
 	@echo arch=$(arch)
 	@echo compiler=$(compiler)
 	@echo runtime=$(runtime)
 	@echo tbb_build_prefix=$(tbb_build_prefix)
-
+	@echo tbb_install_prefix=$(tbb_install_prefix)
