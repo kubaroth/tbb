@@ -39,6 +39,8 @@ ifndef tbb_os
 
 endif # !tbb_os
 
+compiler=$(findstring clang,$(shell $(CC) --version))
+
 ifeq (1,$(tbb_cpf))
   export CPF_SUFFIX ?=_preview
 endif
