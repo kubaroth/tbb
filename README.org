@@ -1,1 +1,7 @@
+make tbb CXX_ONLY_FLAGS=-DTERMUX
+
+
 tbb_install_prefix=$HOME/toolchains/tbb make install
+
+
+

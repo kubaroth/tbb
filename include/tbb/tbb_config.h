@@ -758,8 +758,9 @@ There are four cases that are supported:
 
 // Many OS versions (Android 4.0.[0-3] for example) need workaround for dlopen to avoid non-recursive loader lock hang
 // Setting the workaround for all compile targets ($APP_PLATFORM) below Android 4.4 (android-19)
-#if __ANDROID__
-//#include <android/api-level.h>
+// enable with: make tbb CXX_ONLY_FLAGS=-DTERMUX
+#if __ANDROID__ && !defined(TERMUX)
+#include <android/api-level.h>
 #define __TBB_USE_DLOPEN_REENTRANCY_WORKAROUND  (__ANDROID_API__ < 19)
 #endif
 
