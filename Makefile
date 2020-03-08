@@ -78,7 +78,7 @@ install: tbb tbbmalloc tbbproxy
 	# Usage: tbb_install_prefix=./install_dir2 make -j 20 install
 	@mkdir -p "$(tbb_install_prefix)$(SLASH)lib"
 	@mkdir -p "$(tbb_install_prefix)$(SLASH)share"
-	find "$(work_dir)_release" -name "*.$(LIBEXT)*" -print0 | xargs -0 -I {{}} cp -vP {{}} "$(tbb_install_prefix)/lib"
+	find "$(work_dir)_release" -name "*.$(LIBEXT)*" -print0 | xargs -0 -I {{}} cp -va {{}} "$(tbb_install_prefix)/lib"
 	# Force recreate symlinks, TODO replace harcoded interfacev ersion (2) of the soname
 	for LIBNAME in $^; do \
 		ln -sfr "$(tbb_install_prefix)/lib/lib$$LIBNAME.$(LIBEXT).2" "$(tbb_install_prefix)/lib/lib$$LIBNAME.$(LIBEXT)" ; \
