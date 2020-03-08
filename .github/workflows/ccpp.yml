@@ -1,0 +1,17 @@
+name: Build on termux
+
+on:
+  push:
+    branches: [ termux ]
+  pull_request:
+    branches: [ termux ]
+
+jobs:
+  linuxbuild:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make
