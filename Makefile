@@ -76,13 +76,17 @@ mkdir:
 install: tbb tbbmalloc tbbproxy
 	# Copy generate libs, includes, and cmake configuration files
 	# Usage: tbb_install_prefix=./install_dir2 make -j 20 install
+	@echo "Installing to: $(tbb_install_prefix)"
 	@mkdir -p "$(tbb_install_prefix)$(SLASH)lib"
 	@mkdir -p "$(tbb_install_prefix)$(SLASH)share"
-	find "$(work_dir)_release" -name "*.$(LIBEXT)*" -print0 | xargs -0 -I {{}} cp -vP {{}} "$(tbb_install_prefix)/lib"
+	find "$(work_dir)_release" -name "*.$(LIBEXT).2" -print0 | xargs -0 -I {{}} cp -va {{}} "$(tbb_install_prefix)/lib"
 	# Force recreate symlinks, TODO replace harcoded interfacev ersion (2) of the soname
 	for LIBNAME in $^; do \
 		ln -sfr "$(tbb_install_prefix)/lib/lib$$LIBNAME.$(LIBEXT).2" "$(tbb_install_prefix)/lib/lib$$LIBNAME.$(LIBEXT)" ; \
 	done
+	# $(eval aaa:=$(shell ls "$(work_dir)_release/*.$(LIBEXT).2"))
+	# @echo $(aaa)___
+ 
 	cp -r "$(work_dir)_release$(SLASH)$(tbb_root)$(SLASH)cmake" "$(tbb_install_prefix)$(SLASH)share"
 	cp -r "$(work_dir)_release$(SLASH)$(tbb_root)$(SLASH)include" "$(tbb_install_prefix)"
 
