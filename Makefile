@@ -90,6 +90,6 @@ info:
 	@echo OS: $(tbb_os)
 	@echo arch=$(arch)
 	@echo compiler=$(compiler)
-	@echo runtime=$(runtime)
+	@echo runtime=$(runtime) ---
 	@echo tbb_build_prefix=$(tbb_build_prefix)
 	@echo tbb_install_prefix=$(tbb_install_prefix)
