@@ -39,9 +39,9 @@ ifndef tbb_os
 
 endif # !tbb_os
 
-check_clang=$(findstring clang, $(shell $(compiler) --version))
-ifeq ($(check_clang), clang)
-  override compiler=clang
+check_clang=$(findstring clang, $(shell $(CC) --version))
+ifeq ($(check_clang),clang)
+  compiler=clang
 endif
 
 ifeq (1,$(tbb_cpf))
